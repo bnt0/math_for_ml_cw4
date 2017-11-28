@@ -1,0 +1,41 @@
+\documentclass{article}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{graphicx}
+\graphicspath{{../graphs/}}
+
+\begin{document}
+\title{Mathematics for Machine Learning --- Coursework 4}
+\date{\today}
+\author{Balint Rikker}
+
+\maketitle
+
+\paragraph{Part I} \mbox{} \\
+
+See \cref{fig:pca} for PCA, \cref{fig:wpca} for whitened PCA, and \cref{fig:lda} for LDA.
+
+\begin{figure}[h]
+\caption{PCA recognition error vs number of components kept}
+\centering
+\label{fig:pca}
+\includegraphics[width=0.8\textwidth]{pca}
+\end{figure}
+
+\begin{figure}[h]
+\caption{Whitened PCA recognition error vs number of components kept}
+\centering
+\label{fig:wpca}
+\includegraphics[width=0.8\textwidth]{wpca}
+\end{figure}
+
+\begin{figure}[h]
+\caption{LDA recognition error vs number of components kept}
+\centering
+\label{fig:lda}
+\includegraphics[width=0.8\textwidth]{lda}
+\end{figure}
+
+
+\end{document}
