@@ -3,6 +3,7 @@
 \usepackage{hyperref}
 \usepackage{cleveref}
 \usepackage{graphicx}
+\usepackage{float}
 \graphicspath{{../graphs/}}
 
 \begin{document}
@@ -15,24 +16,25 @@
 \paragraph{Part I} \mbox{} \\
 
 See \cref{fig:pca} for PCA, \cref{fig:wpca} for whitened PCA, and \cref{fig:lda} for LDA.
-Overall LDA seem to perform the best for Small Sample Size problems, but it requires labels being available.
-For unsupervised problems, whitened PCA seem to perform better than PCA.
 
-\begin{figure}[h]
+Overall LDA seem to perform the best for Small Sample Size problems (error rate is less than 30\% for number of components between 20 and 50), but it requires labels being available.
+For unsupervised problems, whitened PCA seem to perform a lot better than PCA. Error rates are mostly below 40\% for wPCA with number of components less than 40, whereas PCA for the same range performs badly, with over 80-90\% error rates. PCA's error rate only approaches 75\% for a large number of components.
+
+\begin{figure}[H]
 \caption{PCA recognition error vs number of components kept}
 \centering
 \label{fig:pca}
 \includegraphics[width=0.8\textwidth]{pca}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \caption{Whitened PCA recognition error vs number of components kept}
 \centering
 \label{fig:wpca}
 \includegraphics[width=0.8\textwidth]{wpca}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \caption{LDA recognition error vs number of components kept}
 \centering
 \label{fig:lda}
@@ -59,7 +61,7 @@ $$ \textbf{w} = \textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i \textbf{x}_i $$
 
 \bigskip
 
-$$ \frac{\partial L}{\partial b} = \sum_{i=1}{n}a_i y_i = 0 \Leftrightarrow $$
+$$ \frac{\partial L}{\partial b} = \sum_{i=1}^{n}a_i y_i = 0 \Leftrightarrow $$
 $$ \textbf{a}^T \textbf{y} = 0 $$
 
 \bigskip
@@ -103,6 +105,7 @@ The accuracy on the test set is 1.00.
 
 
 \paragraph{Part II. ii.} \mbox{} \\
+
 Singular $\textbf{S}_t$ arises when there is a linear interdependence between the variables, or geometrically, the number of dimensions is smaller than the number of samples.
 We can perform some sort of dimensionality reduction, e.g.\ PCA on our input dataset before applying the SVM algorithm. 
 By keeping the number of dimensions equal to the number of non-zero eigenvalues of our covariance matrix, we can be sure that the covariance matrix of our resulting dataset will be invertible.
