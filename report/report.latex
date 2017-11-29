@@ -88,4 +88,17 @@ $$ L(\textbf{a}) = \frac{1}{2} (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i \textbf
 
 $$ L(\textbf{a}) = -\frac{1}{2} \sum_{i=1}^{n}\sum_{j=1}^{n}a_iy_i \textbf{x}_i^T \textbf{S}_t^{-1} a_j y_j \textbf{x}_j + \sum_{i=1}^{n} a_i $$
 
+This dual problem can be written as:
+
+$$ L(\textbf{a}) = \textbf{1}^T \textbf{a} - \frac{1}{2}\textbf{a}K_y\textbf{a}^T $$
+
+subject to $C \geq a_i \geq 0, i = 1..n, \textbf{a}^T \textbf{y} = 0$,
+with $\textbf{K}_y = y_i \textbf{x}_i^T \textbf{S}_t^{-1} y_j \textbf{x}_j $.
+
+\bigskip
+
+This problem can now be solved in Matlab using \texttt{quadprog}. The code solving the problem and calculating accuracy on the test set can be found in the file \texttt{SVM.m}.
+
+The accuracy on the test set is 1.00.
+
 \end{document}
