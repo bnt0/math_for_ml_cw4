@@ -39,7 +39,7 @@ For unsupervised problems, whitened PCA seem to perform better than PCA.
 \includegraphics[width=0.8\textwidth]{lda}
 \end{figure}
 
-\paragraph{Part II} \mbox{} \\
+\paragraph{Part II. i.} \mbox{} \\
 
 The Lagrangian of the optimization problem can be stated as follows (where $a_i \geq 0$ and $r_i \geq 0$ are Lagrangian multipliers):
 
@@ -100,5 +100,11 @@ with $\textbf{K}_y = y_i \textbf{x}_i^T \textbf{S}_t^{-1} y_j \textbf{x}_j $.
 This problem can now be solved in Matlab using \texttt{quadprog}. The code solving the problem and calculating accuracy on the test set can be found in the file \texttt{SVM.m}.
 
 The accuracy on the test set is 1.00.
+
+
+\paragraph{Part II. ii.} \mbox{} \\
+Singular $\textbf{S}_t$ arises when there is a linear interdependence between the variables, or geometrically, the number of dimensions is smaller than the number of samples.
+We can perform some sort of dimensionality reduction, e.g.\ PCA on our input dataset before applying the SVM algorithm. 
+By keeping the number of dimensions equal to the number of non-zero eigenvalues of our covariance matrix, we can be sure that the covariance matrix of our resulting dataset will be invertible.
 
 \end{document}
