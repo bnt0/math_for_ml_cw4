@@ -44,7 +44,7 @@ For unsupervised problems, whitened PCA seem to perform better than PCA.
 The Lagrangian of the optimization problem can be stated as follows (where $a_i \geq 0$ and $r_i \geq 0$ are Lagrangian multipliers):
 
 \begin{equation} \label{eq:L}
-L(\textbf{w}, b, \xi_i, a_i, r_i) = \frac{1}{2} \textbf{w}^T \textbf{S}_t \textbf{w} + C \sum^n_{i=1}\xi_i - \sum^n_{i=1}a_i(y_i(\textbf{w}^T x_i + b) - 1 + \xi_i) - \sum^n_{i=1}r_i\xi_i
+    L(\textbf{w}, b, \xi_i, a_i, r_i) = \frac{1}{2} \textbf{w}^T \textbf{S}_t \textbf{w} + C \sum^n_{i=1}\xi_i - \sum^n_{i=1} a_i (y_i (\textbf{w}^T \textbf{x}_i + b) - 1 + \xi_i) - \sum^n_{i=1}r_i\xi_i
 \end{equation}
 
 The dual problem to optimize is then:
@@ -53,9 +53,9 @@ $$ \max_{a_i > 0} \min_{\textbf{w}, b, \xi_i} L(\textbf{w}, b, \xi_i, a_i, r_i) 
 
 The optimal $\textbf{w}$, $b$ and $\xi_i$ will satisfy the condition that the partial derivatives with regards to these parameters will be 0.
 
-$$ \frac{\partial L}{\partial \textbf{w}} = \frac{1}{2} (\textbf{S}_t + \textbf{S}_t^T) \textbf{w} - \sum_{i=1}^{n} a_i y_i x_i = \textbf{S}_t \textbf{w} - \sum_{i=1}^{n} a_i y_i x_i = 0 \Leftrightarrow $$
-$$ \textbf{S}_t \textbf{w} = \sum_{i=1}^{n} a_i y_i x_i \Leftrightarrow $$
-$$ \textbf{w} = \textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i x_i $$
+$$ \frac{\partial L}{\partial \textbf{w}} = \frac{1}{2} (\textbf{S}_t + \textbf{S}_t^T) \textbf{w} - \sum_{i=1}^{n} a_i y_i \textbf{x}_i = \textbf{S}_t \textbf{w} - \sum_{i=1}^{n} a_i y_i \textbf{x}_i = 0 \Leftrightarrow $$
+$$ \textbf{S}_t \textbf{w} = \sum_{i=1}^{n} a_i y_i \textbf{x}_i \Leftrightarrow $$
+$$ \textbf{w} = \textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i \textbf{x}_i $$
 
 \bigskip
 
@@ -70,17 +70,22 @@ $$ r_i + a_i = C $$
 
 We can substitute these values back to \labelcref{eq:L}:
 
-$$ L(\textbf{a}) = \frac{1}{2} (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i x_i)^T \textbf{S}_t (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i x_i) + C \sum_{i=1}^{n} \xi_i - \sum_{i=1}^{n} a_i (y_i ( (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i x_i)^T + b) - 1 + \xi_i) - \sum_{i=1}^{n}r_i \xi_i $$
+$$ L(\textbf{a}) = \frac{1}{2} (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i \textbf{x}_i)^T \textbf{S}_t (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i \textbf{x}_i) + C \sum_{i=1}^{n} \xi_i - \sum_{i=1}^{n} a_i (y_i ( (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i \textbf{x}_i^T) \textbf{x}_i + b) - 1 + \xi_i) - \sum_{i=1}^{n}r_i \xi_i $$
 
-$$ L(\textbf{a}) = \frac{1}{2} (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i x_i)^T \sum_{i=1}^{n} a_i y_i x_i + C \sum_{i=1}^{n} \xi_i - \sum_{i=1}^{n} a_i (y_i ( (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i x_i)^T + b)) + \sum_{i=1}^{n} a_i - \sum_{i=1}^{n}a_i \xi_i - \sum_{i=1}^{n}r_i \xi_i $$
+$$ L(\textbf{a}) = \frac{1}{2} (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i \textbf{x}_i)^T \sum_{i=1}^{n} a_i y_i \textbf{x}_i + C \sum_{i=1}^{n} \xi_i - \sum_{i=1}^{n} a_i (y_i ( (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i \textbf{x}_i)^T \textbf{x}_i+ b)) + \sum_{i=1}^{n} a_i - \sum_{i=1}^{n}a_i \xi_i - \sum_{i=1}^{n}r_i \xi_i $$
 
-$$ L(\textbf{a}) = \frac{1}{2} (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i x_i)^T \sum_{i=1}^{n} a_i y_i x_i + C \sum_{i=1}^{n} \xi_i - \sum_{i=1}^{n} a_i (y_i ( (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i x_i)^T + b)) + \sum_{i=1}^{n} a_i - \sum_{i=1}^{n}a_i \xi_i - \sum_{i=1}^{n}r_i \xi_i $$
+$$ L(\textbf{a}) = \frac{1}{2} (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i \textbf{x}_i)^T \sum_{i=1}^{n} a_i y_i \textbf{x}_i + C \sum_{i=1}^{n} \xi_i - \sum_{i=1}^{n} a_i (y_i ( (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i \textbf{x}_i)^T \textbf{x}_i+ b)) + \sum_{i=1}^{n} a_i - \sum_{i=1}^{n}a_i \xi_i - \sum_{i=1}^{n}r_i \xi_i $$
 
-$$ L(\textbf{a}) = \frac{1}{2} (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i x_i)^T \sum_{i=1}^{n} a_i y_i x_i  - \sum_{i=1}^{n} a_i (y_i ( (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i x_i)^T + b)) + \sum_{i=1}^{n} a_i + C \sum_{i=1}^{n} \xi_i - \sum_{i=1}^{n}\xi_i (a_i + r_i) $$
+$$ L(\textbf{a}) = \frac{1}{2} (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i \textbf{x}_i)^T \sum_{i=1}^{n} a_i y_i \textbf{x}_i  - \sum_{i=1}^{n} a_i (y_i ( (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i \textbf{x}_i)^T \textbf{x}_i+ b)) + \sum_{i=1}^{n} a_i + C \sum_{i=1}^{n} \xi_i - \sum_{i=1}^{n}\xi_i (a_i + r_i) $$
 
-$$ L(\textbf{a}) = \frac{1}{2} (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i x_i)^T \sum_{i=1}^{n} a_i y_i x_i  - \sum_{i=1}^{n} a_i (y_i ( (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i x_i)^T + b)) + \sum_{i=1}^{n} a_i + C \sum_{i=1}^{n} \xi_i - \sum_{i=1}^{n}\xi_i C $$
+$$ L(\textbf{a}) = \frac{1}{2} (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i \textbf{x}_i)^T \sum_{i=1}^{n} a_i y_i \textbf{x}_i  - \sum_{i=1}^{n} a_i (y_i ( (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i \textbf{x}_i)^T \textbf{x}_i+ b)) + \sum_{i=1}^{n} a_i + C \sum_{i=1}^{n} \xi_i - \sum_{i=1}^{n}\xi_i C $$
 
-$$ L(\textbf{a}) = \frac{1}{2} (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i x_i)^T \sum_{i=1}^{n} a_i y_i x_i  - \sum_{i=1}^{n} a_i (y_i ( (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i x_i)^T + b)) + \sum_{i=1}^{n} a_i $$
+$$ L(\textbf{a}) = \frac{1}{2} (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i \textbf{x}_i)^T \sum_{i=1}^{n} a_i y_i \textbf{x}_i  - \sum_{i=1}^{n} a_i (y_i ( (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i \textbf{x}_i)^T \textbf{x}_i+ b)) + \sum_{i=1}^{n} a_i $$
 
+$$ L(\textbf{a}) = \frac{1}{2} (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i \textbf{x}_i)^T \sum_{i=1}^{n} a_i y_i \textbf{x}_i  - \sum_{i=1}^{n} a_i y_i ( (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i \textbf{x}_i)^T \textbf{x}_i) + \sum_{i=1}^{n} a_i y_i b + \sum_{i=1}^{n} a_i $$
+
+$$ L(\textbf{a}) = \frac{1}{2} (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i \textbf{x}_i)^T \sum_{i=1}^{n} a_i y_i \textbf{x}_i  - \sum_{i=1}^{n} a_i y_i ( (\textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i \textbf{x}_i)^T \textbf{x}_i) + \sum_{i=1}^{n} a_i $$
+
+$$ L(\textbf{a}) = -\frac{1}{2} \sum_{i=1}^{n}\sum_{j=1}^{n}a_iy_i \textbf{x}_i^T \textbf{S}_t^{-1} a_j y_j \textbf{x}_j + \sum_{i=1}^{n} a_i $$
 
 \end{document}
