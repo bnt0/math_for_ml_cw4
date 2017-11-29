@@ -15,6 +15,8 @@
 \paragraph{Part I} \mbox{} \\
 
 See \cref{fig:pca} for PCA, \cref{fig:wpca} for whitened PCA, and \cref{fig:lda} for LDA.
+Overall LDA seem to perform the best for Small Sample Size problems, but it requires labels being available.
+For unsupervised problems, whitened PCA seem to perform better than PCA.
 
 \begin{figure}[h]
 \caption{PCA recognition error vs number of components kept}
@@ -37,5 +39,29 @@ See \cref{fig:pca} for PCA, \cref{fig:wpca} for whitened PCA, and \cref{fig:lda}
 \includegraphics[width=0.8\textwidth]{lda}
 \end{figure}
 
+\paragraph{Part II} \mbox{} \\
+The Lagrangian of the optimization problem can be stated as follows (where $a_i \geq 0$ and $r_i \geq 0$ are Lagrangian multipliers):
+
+$$ L(\textbf{w}, b, \xi_i, a_i, r_i) = \frac{1}{2} \textbf{w}^T \textbf{S}_t \textbf{w} + C \sum^n_{i=1}\xi_i - \sum^n_{i=1}a_i(y_i(\textbf{w}^T x_i + b) - 1 + \xi_i) - \sum^n_{i=1}r_i\xi_i $$
+
+The dual problem to optimize is then:
+
+$$ \max_{a_i > 0} \min{\textbf{w}, b, \xi_i, r_i} L(\textbf{w}, b, \xi_i, a_i, r_i) $$
+
+The optimal $\textbf{w}$, $b$ and $\xi_i$ will satisfy the condition that the partial derivatives with regards to these parameters will be 0.
+
+$$ \frac{\partial L}{\partial \textbf{w}} = \frac{1}{2} (\textbf{S}_t + \textbf{S}_t^T) \textbf{w} - \sum_{i=1}^{n} a_i y_i x_i = \textbf{S}_t \textbf{w} - \sum_{i=1}^{n} a_i y_i x_i = 0 \Leftrightarrow $$
+$$ \textbf{S}_t \textbf{w} = \sum_{i=1}^{n} a_i y_i x_i \Leftrightarrow $$
+$$ \textbf{w} = \textbf{S}_t^{-1} \sum_{i=1}^{n} a_i y_i x_i $$
+
+\bigskip
+
+$$ \frac{\partial L}{\partial b} = \sum_{i=1}{n}a_i y_i = 0 \Leftrightarrow $$
+$$ a^T \textbf{y} = 0 $$
+
+\bigskip
+
+$$ \frac{\partial L}{\partial \xi_i} = C - a_i - r_i = 0 \Leftrightarrow $$
+$$ r_i + a_i = C $$
 
 \end{document}
